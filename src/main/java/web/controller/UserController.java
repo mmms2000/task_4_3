@@ -1,6 +1,7 @@
 package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
@@ -23,7 +24,13 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") User user,
+                         BindingResult result,
+                         Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("user", userService.findAll());
+        return "users";
+        }
         userService.save(user);
         return "redirect:/users";
     }
@@ -35,7 +42,14 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("user") User user) {
+    public String update(@PathVariable Long id, @ModelAttribute("user") User user,
+                         BindingResult result) {
+
+        if (result.hasErrors()) {
+            user.setId(id);
+            return "edit";
+        }
+
         user.setId(id);
         userService.update(user);
         return "redirect:/users";

@@ -1,5 +1,8 @@
 package web.model;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +13,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotBlank(message = "First name is required")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank(message = "Last name is required")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
 
     public User() {}

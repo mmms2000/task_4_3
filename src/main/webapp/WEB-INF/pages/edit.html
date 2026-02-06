@@ -5,12 +5,31 @@
 
 <h2>Edit User</h2>
 
-<form th:action="@{/users/{id}(id=${user.id})}" th:object="${user}" method="post">
-    <input th:field="*{firstName}" placeholder="First name">
-    <input th:field="*{lastName}" placeholder="Last name">
-    <input th:field="*{email}" placeholder="Email">
-    <button type="submit">Save</button>
+<form th:action="@{/users}" th:object="${user}" method="post">
+
+    <input th:field="*{firstName}"
+           placeholder="First name"
+           required
+           pattern="[A-Za-z]+"
+           title="Letters only (A-Z)" />
+    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
+    <input th:field="*{lastName}"
+           placeholder="Last name"
+           required
+           pattern="[A-Za-z]+"
+           title="Letters only (A-Z)" />
+    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+    <input th:field="*{email}"
+           placeholder="Email"
+           required
+           type="email" />
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+    <button type="submit">Add</button>
 </form>
+
 
 <a th:href="@{/users}">Back</a>
 
