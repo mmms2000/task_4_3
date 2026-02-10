@@ -5,7 +5,7 @@
 
 <h2>Edit User</h2>
 
-<form th:action="@{/users}" th:object="${user}" method="post">
+<form th:action="@{/users/{id}(id=${user.id})}" th:object="${user}" method="post">
 
     <input th:field="*{firstName}"
            placeholder="First name"
@@ -27,7 +27,7 @@
            type="email" />
     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
-    <button type="submit">Add</button>
+    <button type="submit">update</button>
 </form>
 
 

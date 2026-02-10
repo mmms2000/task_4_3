@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -24,11 +26,11 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") User user,
+    public String create(@Valid @ModelAttribute("user") User user,
                          BindingResult result,
                          Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("user", userService.findAll());
+            model.addAttribute("users", userService.findAll());
         return "users";
         }
         userService.save(user);
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("user") User user,
+    public String update(@PathVariable Long id, @Valid @ModelAttribute("user") User user,
                          BindingResult result) {
 
         if (result.hasErrors()) {
